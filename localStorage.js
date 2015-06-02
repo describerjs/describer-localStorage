@@ -1,4 +1,5 @@
 window.dc = window.dc || {};
+window.dc.config = window.dc.config || {};
 window.dc.localStorage = window.dc.localStorage || {};
 window.dc.localStorage.timestemp = window.dc.localStorage.timestemp || 1402389706108;
 // Modernizr-Test auf localStorage
@@ -20,15 +21,15 @@ window.dc.localStorage.test = function(){
 
 window.dc.localStorage.checkDebugMode = (function(){
 	if (window.dc.localStorage.test() && localStorage.getItem('debug') !== null) {
-		window.dc.useLocalStorage = false;
-		window.dc.loadUnminifyVersion = true;
+		window.dc.config.useLocalStorage = false;
+		window.dc.config.loadUnminifyVersion = true;
 	} else {
-		window.dc.useLocalStorage = true;
-		window.dc.loadUnminifyVersion = false;
+		window.dc.config.useLocalStorage = true;
+		window.dc.config.loadUnminifyVersion = false;
 	}
 })();
 
-if(dc.useLocalStorage && dc.loadUnminifyVersion){
+if(dc.config.useLocalStorage && dc.config.loadUnminifyVersion){
 	console.warn('-------------!!!!!-----localStorage wird nicht gelöscht!------!!!!!-----');
 }
 
@@ -58,7 +59,7 @@ window.dc.localStorage.addCSSToDOM = function(p_src){
     var styleElem;
     // wenn localStorage vorliegt aber der Datei-Pfade(key) und entsprechen die value nicht vorhanden ist.
     // -> dynamische Erstellung eines link-tags mit Angabe des Datei-Pfades und anschließender ajax nach Dom-Ready um den Conten im localStorage abzulengen (kommt aus dem Cache).
-    if (dc.useLocalStorage && dc.localStorage.test() && (localStorage[p_src] === undefined)) {
+    if (dc.config.useLocalStorage && dc.localStorage.test() && (localStorage[p_src] === undefined)) {
         // window.localStorage is available!
         linkElem = document.createElement('link');
         linkElem.setAttribute('rel', 'stylesheet');
@@ -80,7 +81,7 @@ window.dc.localStorage.addCSSToDOM = function(p_src){
         });
         // wenn localStorage vorliegt und der Datei-Pfade(key) und entsprecher value im localStorage vorhanden ist.
         // -> dynamische Erstellung eines style-tags mit injection der value aus dem localStorage.
-    }else if(dc.useLocalStorage && dc.localStorage.test() && (localStorage[p_src] !== undefined)){
+    }else if(dc.config.useLocalStorage && dc.localStorage.test() && (localStorage[p_src] !== undefined)){
         styleElem = document.createElement('style');
         styleElem.appendChild(document.createTextNode(localStorage[p_src]));
         document.getElementsByTagName('head')[0].appendChild(styleElem);
@@ -99,7 +100,7 @@ window.dc.localStorage.addJSToDOM = function(p_src, p_attrkey, p_attrval){
     var scriptElem;
     // wenn localStorage vorliegt aber der Datei-Pfade(key) und entsprechen die value nicht vorhanden ist.
     // -> dynamische Erstellung eines script-tags mit Angabe des Datei-Pfades und anschließender ajax nach Dom-Ready um den Conten im localStorage abzulengen (kommt aus dem Cache).
-    if(dc.useLocalStorage && dc.localStorage.test() && (typeof localStorage[p_src] === 'undefined')){
+    if(dc.config.useLocalStorage && dc.localStorage.test() && (typeof localStorage[p_src] === 'undefined')){
         // window.localStorage is available!
         scriptElem = document.createElement('script');
         scriptElem.setAttribute('src', p_src);
@@ -124,7 +125,7 @@ window.dc.localStorage.addJSToDOM = function(p_src, p_attrkey, p_attrval){
         });
         // wenn localStorage vorliegt und der Datei-Pfade(key) und entsprecher value im localStorage vorhanden ist.
         // -> dynamische Erstellung eines style-tags mit injection der value aus dem localStorage.
-    }else if(dc.useLocalStorage && dc.localStorage.test() && (typeof localStorage[p_src] !== 'undefined')){
+    }else if(dc.config.useLocalStorage && dc.localStorage.test() && (typeof localStorage[p_src] !== 'undefined')){
         scriptElem = document.createElement('script');
         if(typeof p_attrkey !== 'undefined'){
             scriptElem.setAttribute(p_attrkey, p_attrval);
@@ -187,7 +188,7 @@ window.dc.localStorage.addLocalStorageEntryToDom = function(p_str, p_url, p_modu
 };
 
 window.dc.localStorage.checkTimestamp = (function(){
-    if(dc.useLocalStorage && dc.localStorage.test()){
+    if(dc.config.useLocalStorage && dc.localStorage.test()){
         try{
             // wenn kein timestamp im localStorage vorhanden ist wird einer erstellt.
             if(localStorage.getItem('timestamp') === null){

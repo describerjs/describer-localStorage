@@ -1839,7 +1839,7 @@ var requirejs, require, define;
 			xhr,
 			scriptElem;
         if (isBrowser) {
-	        if (window.dc.useLocalStorage && window.dc.localStorage.test() && (localStorage[url] !== undefined)) {
+	        if (window.dc.config.useLocalStorage && window.dc.localStorage.test() && (localStorage[url] !== undefined)) {
 		        window.dc.localStorage.addLocalStorageEntryToDom(localStorage[url], url, moduleName, function(){context.completeLoad(moduleName)});
 	        }else{
 		        //In the browser so use a script tag
@@ -1901,7 +1901,7 @@ var requirejs, require, define;
 			        head.appendChild(node);
 		        }
 		        currentlyAddingScript = null;
-		        if (window.dc.useLocalStorage && window.dc.localStorage.test() && (localStorage[url] === undefined)) {
+		        if (window.dc.config.useLocalStorage && window.dc.localStorage.test() && (localStorage[url] === undefined)) {
 			        // window.localStorage is available!
 			        xhr = new XMLHttpRequest();
 
