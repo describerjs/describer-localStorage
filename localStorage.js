@@ -188,18 +188,18 @@ window.dc.localStorage.addLocalStorageEntryToDom = function(p_str, p_url, p_modu
 };
 
 window.dc.localStorage.checkTimestamp = (function(){
-    if(dc.config.useLocalStorage && dc.localStorage.test()){
-        try{
-            // wenn kein timestamp im localStorage vorhanden ist wird einer erstellt.
-            if(localStorage.getItem('timestamp') === null){
-                localStorage['timestamp'] = new Date().getTime().toString();
-            }else{
-                // wenn der timestamp im localStorage kleiner ist als der fest codierte Timestamp, wird wird der localStorage gelöscht.
-                if (parseInt(localStorage['timestamp'], 10) < window.dc.localStorage.timestemp) { // Nicht Ändern!!!! So wird bei allen Clients der localStorage gelöscht!!!! Nur Ändern, wenn sich die Datei-Pfad in der main.js zu den Modulen ändern Bsp. require.config({  paths:{ 'jmButtonForAddClassOnRelatedElem': 'mylibs/AMD-Plugins/jmButtonForAddClassOnRelatedElem',......
-                    window.localStorage.clear();
-                }
-            }
-        }catch(e){
-        }
-    }
+	if(dc.config.useLocalStorage && dc.localStorage.test()){
+		try{
+			// wenn kein timestamp im localStorage vorhanden ist wird einer erstellt.
+			if(localStorage.getItem('timestamp') === null){
+				localStorage.setItem('timestamp', new Date().getTime().toString());
+			}else{
+				// wenn der timestamp im localStorage kleiner ist als der fest codierte Timestamp, wird wird der localStorage gelöscht.
+				if (parseInt(localStorage['timestamp'], 10) < window.dc.localStorage.timestemp) { // Nicht Ändern!!!! So wird bei allen Clients der localStorage gelöscht!!!! Nur Ändern, wenn sich die Datei-Pfad in der main.js zu den Modulen ändern Bsp. require.config({  paths:{ 'jmButtonForAddClassOnRelatedElem': 'mylibs/AMD-Plugins/jmButtonForAddClassOnRelatedElem',......
+					window.localStorage.clear();
+				}
+			}
+		}catch(e){
+		}
+	}
 })();
